@@ -25,3 +25,10 @@ export interface StrokeData {
 }
 
 export type VideoUploadStatus = "idle" | "uploading" | "uploaded" | "failed";
+
+/** Local video chosen on the device and sent to the upload endpoint. */
+export interface VideoFile {
+  uri: string;
+  name: string;
+  type: string;
+}

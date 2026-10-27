@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native';
-import type { Profile } from '../types';
+import { Text, View } from 'react-native';
+import type { Profile } from '../../types';
+import { styles } from './styles';
 
 const sampleProfile: Profile = {
   firstName: 'Alex',
@@ -45,55 +46,3 @@ export function ProfileScreen() {
     </View>
   );
 }
-
-/** Pick a video and send it to the backend. */
-export function VideoUploadScreen() {
-  return (
-    <View style={styles.screen}>
-      <Text style={styles.title}>Video upload</Text>
-      <Text style={styles.body}>Choose a video and send it to the backend.</Text>
-    </View>
-  );
-}
-
-/** Stroke count, type, and judgment. */
-export function ResultsScreen() {
-  return (
-    <View style={styles.screen}>
-      <Text style={styles.title}>Results</Text>
-      <Text style={styles.body}>
-        Stroke count, type, and a judgment for each stroke.
-      </Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    paddingHorizontal: 24,
-    paddingTop: 24,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
-    marginBottom: 20,
-  },
-  body: {
-    fontSize: 16,
-    lineHeight: 22,
-  },
-  field: {
-    paddingVertical: 12,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#ddd',
-  },
-  label: {
-    fontSize: 13,
-    color: '#666',
-    marginBottom: 4,
-  },
-  value: {
-    fontSize: 17,
-  },
-});

@@ -1,0 +1,85 @@
+import { StyleSheet } from 'react-native';
+
+export const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: '#F4F5F7',
+    paddingHorizontal: 24,
+    paddingTop: 12,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 16,
+  },
+  back: {
+    width: 32,
+    height: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  backChevron: {
+    fontSize: 32,
+    fontWeight: '400',
+    color: '#243038',
+    lineHeight: 34,
+  },
+  title: {
+    flex: 1,
+    fontSize: 22,
+    fontWeight: '600',
+    color: '#243038',
+  },
+  playerCard: {
+    flex: 1,
+    minHeight: 240,
+    borderRadius: 20,
+    overflow: 'hidden',
+    backgroundColor: '#111',
+    marginBottom: 20,
+  },
+  video: {
+    width: '100%',
+    height: '100%',
+  },
+  error: {
+    position: 'absolute',
+    left: 16,
+    right: 16,
+    bottom: 16,
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '400',
+  },
+  recap: {
+    fontSize: 12,
+    fontWeight: '500',
+    letterSpacing: 0.8,
+    color: '#8B919A',
+    marginBottom: 12,
+    textTransform: 'uppercase',
+  },
+  countCard: {
+    backgroundColor: '#F6F7F9',
+    borderWidth: 1,
+    borderColor: '#E6E8EC',
+    borderRadius: 18,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    marginBottom: 12,
+  },
+  countLabel: {
+    fontSize: 12,
+    fontWeight: '500',
+    letterSpacing: 0.6,
+    color: '#8B919A',
+    marginBottom: 4,
+    textTransform: 'uppercase',
+  },
+  countValue: {
+    fontSize: 22,
+    fontWeight: '500',
+    color: '#243038',
+  },
+});

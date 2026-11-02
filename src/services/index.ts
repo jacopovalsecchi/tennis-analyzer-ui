@@ -1,13 +1,13 @@
 import { Platform } from 'react-native';
-import type { VideoFile, VideoResult } from '../types';
+import type { Profile, ShotComment, VideoFile, VideoResult } from '../types';
 import { setLatestResult } from './latestResult';
 
 export { getLatestResult, setLatestResult, subscribeLatestResult } from './latestResult';
 
 /** Android emulator reaches the host machine at 10.0.2.2. */
-const host = Platform.OS === 'android' ? '10.0.2.2' : '192.168.129.254';
+//const host = Platform.OS === 'android' ? '10.0.2.2' : '192.168.129.254';
 //const host = Platform.OS === 'android' ? '10.0.2.2' : '192.168.129.5';
-//const host = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
+const host = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
 
 export const API_BASE_URL = `http://${host}:3001`;
 
@@ -15,6 +15,24 @@ export const API_BASE_URL = `http://${host}:3001`;
 export const apiClient = {
   baseUrl: API_BASE_URL,
 };
+
+/** Save the profile currently edited in the app. */
+export async function updateProfile(profile: Profile): Promise<void> {
+  const response = await fetch(`${API_BASE_URL}/profile`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(profile),
+  });
+
+  if (!response.ok) {
+    const payload = (await response.json().catch(() => null)) as
+      | { error?: string }
+      | null;
+    throw new Error(payload?.error ?? `Profile update failed (${response.status})`);
+  }
+}
 
 type AnalysisPayload = {
   filename?: string;
@@ -24,6 +42,7 @@ type AnalysisPayload = {
     forehands?: number;
     backhands?: number;
   };
+  comments?: ShotComment[];
 };
 
 function toResult(payload: AnalysisPayload, fallbackName: string): VideoResult {
@@ -34,6 +53,7 @@ function toResult(payload: AnalysisPayload, fallbackName: string): VideoResult {
     forehands: payload.strokes?.forehands ?? 0,
     backhands: payload.strokes?.backhands ?? 0,
     overlayUrl: `${API_BASE_URL}/results/latest/overlay`,
+    comments: payload.comments ?? [],
   };
 }
 

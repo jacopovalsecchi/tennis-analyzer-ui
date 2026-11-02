@@ -1,7 +1,8 @@
-import { Pressable, Text, View } from 'react-native';
+import { Image, Pressable, Text, View } from 'react-native';
 import { useLatestResult } from '../../hooks';
+import { API_BASE_URL } from '../../services';
 import type { VideoResult } from '../../types';
-import { formatResultDate } from '../../utils';
+import { formatResultDateTime } from '../../utils';
 import { styles } from './styles';
 
 function FilmIcon() {
@@ -20,6 +21,10 @@ export function ResultsScreen({
   onOpenResult: (result: VideoResult) => void;
 }) {
   const result = useLatestResult();
+  const thumbnailPath = result.comments?.find(comment => comment.imageUrl)?.imageUrl;
+  const thumbnailUrl = thumbnailPath
+    ? `${API_BASE_URL}${thumbnailPath}`
+    : null;
 
   return (
     <View style={styles.screen}>
@@ -30,10 +35,24 @@ export function ResultsScreen({
         accessibilityLabel={`Open ${result.filename}`}
         onPress={() => onOpenResult(result)}
         style={styles.card}>
-        <FilmIcon />
+        {thumbnailUrl ? (
+          <Image
+            source={{ uri: thumbnailUrl }}
+            style={styles.thumbnail}
+            resizeMode="cover"
+          />
+        ) : (
+          <View style={styles.thumbnailPlaceholder}>
+            <FilmIcon />
+          </View>
+        )}
         <View style={styles.cardText}>
           <Text style={styles.filename}>{result.filename}</Text>
-          <Text style={styles.date}>{formatResultDate(result.uploadedAt)}</Text>
+          <Text style={styles.date}>{formatResultDateTime(result.uploadedAt)}</Text>
+          <Text style={styles.counts}>
+            <Text style={styles.countsIcon}>◉</Text>{' '}
+            {result.forehands} Forehands • {result.backhands} Backhands
+          </Text>
         </View>
         <Text style={styles.chevron}>›</Text>
       </Pressable>

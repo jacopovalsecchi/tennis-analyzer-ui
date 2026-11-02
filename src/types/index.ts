@@ -1,12 +1,14 @@
 export type Handedness = "left" | "right";
 
-export type BackhandStyle = "one-handed" | "two-handed";
+export type BackhandStyle = "one end" | "two end";
 
 export interface Profile {
   firstName: string;
   lastName: string;
   handedness: Handedness;
   backhand: BackhandStyle;
+  /** Local URI of the profile image selected from the device library. */
+  imageUri?: string;
   /** Centimetres. */
   height: number;
   /** Kilograms. */
@@ -33,6 +35,17 @@ export interface VideoFile {
   type: string;
 }
 
+/** One shot comment returned by the upload analysis. */
+export interface ShotComment {
+  time: number;
+  frame: number | null;
+  label: string;
+  arm: string;
+  comment: string;
+  /** Path on the backend, for example /results/latest/frames/shot_01.jpg. */
+  imageUrl: string | null;
+}
+
 /** One analyzed upload shown in the results list and on its detail screen. */
 export interface VideoResult {
   id: string;
@@ -43,4 +56,5 @@ export interface VideoResult {
   backhands: number;
   /** Playable overlay URL. Null plays the bundled sample overlay. */
   overlayUrl: string | null;
+  comments?: ShotComment[];
 }

@@ -32,8 +32,8 @@ export const styles = StyleSheet.create({
     color: '#243038',
   },
   playerCard: {
-    flex: 1,
-    minHeight: 240,
+    width: '100%',
+    aspectRatio: 16 / 9,
     borderRadius: 20,
     overflow: 'hidden',
     backgroundColor: '#111',
@@ -52,6 +52,13 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '400',
   },
+  recapScroll: {
+    flex: 1,
+    minHeight: 0,
+  },
+  recapContent: {
+    paddingBottom: 24,
+  },
   recap: {
     fontSize: 12,
     fontWeight: '500',
@@ -69,6 +76,27 @@ export const styles = StyleSheet.create({
     paddingVertical: 14,
     marginBottom: 12,
   },
+  shotCard: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    backgroundColor: '#F6F7F9',
+    borderWidth: 1,
+    borderColor: '#E6E8EC',
+    borderRadius: 18,
+    padding: 10,
+    marginBottom: 12,
+    gap: 12,
+  },
+  shotImage: {
+    width: 90,
+    height: 90,
+    borderRadius: 12,
+    backgroundColor: '#111',
+  },
+  shotContent: {
+    flex: 1,
+    minWidth: 0,
+  },
   countLabel: {
     fontSize: 12,
     fontWeight: '500',
@@ -81,5 +109,59 @@ export const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '500',
     color: '#243038',
+  },
+  commentLabel: {
+    fontSize: 11,
+    fontWeight: '600',
+    letterSpacing: 0.6,
+    color: '#8B919A',
+    marginTop: 6,
+    marginBottom: 2,
+    textTransform: 'uppercase',
+  },
+  commentValue: {
+    fontSize: 15,
+    fontWeight: '400',
+    color: '#243038',
+  },
+  comment: {
+    fontSize: 15,
+    fontWeight: '400',
+    lineHeight: 21,
+    color: '#243038',
+  },
+  frame: {
+    width: '100%',
+    height: 180,
+    marginTop: 10,
+    borderRadius: 12,
+    backgroundColor: '#111',
+  },
+  imageModal: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.92)',
+  },
+  imageModalBackdrop: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  fullscreenImage: {
+    width: '100%',
+    height: '80%',
+  },
+  closeImage: {
+    position: 'absolute',
+    right: 20,
+    top: 52,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 16,
+    backgroundColor: 'rgba(255, 255, 255, 0.18)',
+  },
+  closeImageText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '600',
   },
 });

@@ -6,8 +6,8 @@ export { getLatestResult, setLatestResult, subscribeLatestResult } from './lates
 
 /** Android emulator reaches the host machine at 10.0.2.2. */
 //const host = Platform.OS === 'android' ? '10.0.2.2' : '192.168.129.254';
-//const host = Platform.OS === 'android' ? '10.0.2.2' : '192.168.129.5';
-const host = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
+const host = Platform.OS === 'android' ? '10.0.2.2' : '192.168.129.5';
+//const host = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
 
 export const API_BASE_URL = `http://${host}:3001`;
 

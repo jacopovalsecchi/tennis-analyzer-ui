@@ -67,24 +67,32 @@ export const styles = StyleSheet.create({
     marginBottom: 12,
     textTransform: 'uppercase',
   },
+  countGrid: {
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 12,
+  },
   countCard: {
+    flex: 1,
     backgroundColor: '#F6F7F9',
     borderWidth: 1,
     borderColor: '#E6E8EC',
     borderRadius: 18,
     paddingHorizontal: 16,
     paddingVertical: 14,
-    marginBottom: 12,
   },
   shotCard: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
     backgroundColor: '#F6F7F9',
     borderWidth: 1,
     borderColor: '#E6E8EC',
     borderRadius: 18,
     padding: 10,
     marginBottom: 12,
+    gap: 12,
+  },
+  shotHeader: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
     gap: 12,
   },
   shotImage: {
@@ -96,6 +104,12 @@ export const styles = StyleSheet.create({
   shotContent: {
     flex: 1,
     minWidth: 0,
+  },
+  commentContent: {
+    marginTop: 12,
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#E6E8EC',
   },
   countLabel: {
     fontSize: 12,
@@ -109,6 +123,15 @@ export const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '500',
     color: '#243038',
+  },
+  countValueRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  racketIcon: {
+    width: 22,
+    height: 28,
   },
   commentLabel: {
     fontSize: 11,
@@ -144,7 +167,11 @@ export const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.92)',
   },
   imageModalBackdrop: {
-    ...StyleSheet.absoluteFillObject,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
   },
   fullscreenImage: {
     width: '100%',

@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import Video, { type ReactVideoSource } from 'react-native-video';
+import { ShotTimeline } from '../../components/ShotTimeline';
 import { API_BASE_URL } from '../../services';
 import type { VideoResult } from '../../types';
 import { styles } from './styles';
@@ -34,7 +35,9 @@ export function VideoDetailScreen({
   onBack: () => void;
 }) {
   const [failed, setFailed] = useState(false);
+  const [duration, setDuration] = useState<number>();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [expandedShots, setExpandedShots] = useState<Set<string>>(new Set());
   const source = overlaySource(result);
 
   return (
@@ -62,6 +65,7 @@ export function VideoDetailScreen({
             paused={false}
             resizeMode="contain"
             ignoreSilentSwitch="ignore"
+            onLoad={({ duration: loadedDuration }) => setDuration(loadedDuration)}
             onError={() => setFailed(true)}
           />
         ) : null}
@@ -71,40 +75,78 @@ export function VideoDetailScreen({
       </View>
       <ScrollView style={styles.recapScroll} contentContainerStyle={styles.recapContent}>
         <Text style={styles.recap}>Recap</Text>
-        <View style={styles.countCard}>
-          <Text style={styles.countLabel}>Forehand</Text>
-          <Text style={styles.countValue}>{result.forehands}</Text>
-        </View>
-        <View style={styles.countCard}>
-          <Text style={styles.countLabel}>Backhand</Text>
-          <Text style={styles.countValue}>{result.backhands}</Text>
-        </View>
-        {(result.comments ?? []).map(shot => (
-          <View key={`${shot.time}-${shot.arm}`} style={styles.shotCard}>
-            {shot.imageUrl ? (
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel={`Open frame for ${shot.label}`}
-                onPress={() => setSelectedImage(`${API_BASE_URL}${shot.imageUrl}`)}
-              >
-                <Image
-                  source={{ uri: `${API_BASE_URL}${shot.imageUrl}` }}
-                  style={styles.shotImage}
-                  resizeMode="contain"
-                />
-              </Pressable>
-            ) : null}
-            <View style={styles.shotContent}>
-              <Text style={styles.commentLabel}>Time</Text>
-              <Text style={styles.commentValue}>{shot.time}s</Text>
-              <Text style={styles.commentLabel}>Label</Text>
-              <Text style={styles.commentValue}>{shot.label}</Text>
-              <Text style={styles.commentLabel}>Arm</Text>
-              <Text style={styles.commentValue}>{shot.arm}</Text>
-              <Text style={styles.commentLabel}>Comment</Text>
-              <Text style={styles.comment}>{shot.comment}</Text>
+        <ShotTimeline comments={result.comments ?? []} duration={duration} />
+        <View style={styles.countGrid}>
+          <View style={styles.countCard}>
+            <Text style={styles.countLabel}>Forehand</Text>
+            <View style={styles.countValueRow}>
+              <RacketIcon />
+              <Text style={styles.countValue}>{result.forehands}</Text>
             </View>
           </View>
+          <View style={styles.countCard}>
+            <Text style={styles.countLabel}>Backhand</Text>
+            <View style={styles.countValueRow}>
+              <RacketIcon />
+              <Text style={styles.countValue}>{result.backhands}</Text>
+            </View>
+          </View>
+        </View>
+        {(result.comments ?? []).map(shot => (
+          (() => {
+            const shotKey = `${shot.time}-${shot.arm}-${shot.label}`;
+            const expanded = expandedShots.has(shotKey);
+
+            return (
+              <View key={shotKey} style={styles.shotCard}>
+                <View style={styles.shotHeader}>
+                  {shot.imageUrl ? (
+                    <Pressable
+                      accessibilityRole="button"
+                      accessibilityLabel={`Open frame for ${shot.label}`}
+                      onPress={() =>
+                        setSelectedImage(`${API_BASE_URL}${shot.imageUrl}`)
+                      }
+                    >
+                      <Image
+                        source={{ uri: `${API_BASE_URL}${shot.imageUrl}` }}
+                        style={styles.shotImage}
+                        resizeMode="contain"
+                      />
+                    </Pressable>
+                  ) : null}
+                  <Pressable
+                    accessibilityRole="button"
+                    accessibilityLabel={`${expanded ? 'Collapse' : 'Expand'} ${shot.label}`}
+                    accessibilityState={{ expanded }}
+                    onPress={() => {
+                      setExpandedShots(previous => {
+                        const next = new Set(previous);
+                        if (next.has(shotKey)) {
+                          next.delete(shotKey);
+                        } else {
+                          next.add(shotKey);
+                        }
+                        return next;
+                      });
+                    }}
+                    style={styles.shotContent}
+                  >
+                    <Text style={styles.commentLabel}>Time</Text>
+                    <Text style={styles.commentValue}>{shot.time}s</Text>
+                    <Text style={styles.commentLabel}>Label</Text>
+                    <Text style={styles.commentValue}>{shot.label}</Text>
+                  </Pressable>
+                </View>
+                {expanded ? (
+                  <View style={styles.commentContent}>
+                    <Text style={styles.commentLabel}>Comment</Text>
+                    <Text style={styles.comment}>{shot.comment}</Text>
+                  </View>
+                ) : null}
+              </View>
+            );
+          })()
         ))}
       </ScrollView>
       <Modal
@@ -138,5 +180,16 @@ export function VideoDetailScreen({
         </View>
       </Modal>
     </View>
+  );
+}
+
+function RacketIcon() {
+  return (
+    <Image
+      source={require('../../assets/tennis-racket.png')}
+      style={styles.racketIcon}
+      resizeMode="contain"
+      accessibilityLabel="Tennis racket"
+    />
   );
 }

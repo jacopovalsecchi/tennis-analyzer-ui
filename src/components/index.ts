@@ -1,2 +1,2 @@
 /** Reusable UI pieces shared across screens. */
-export {};
+export { ShotTimeline } from './ShotTimeline';

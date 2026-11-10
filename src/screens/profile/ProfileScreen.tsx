@@ -189,7 +189,11 @@ export function ProfileScreen() {
         <Pressable disabled={saving} onPress={save} style={styles.saveButton}>
           <Text style={styles.saveButtonText}>{saving ? 'Saving…' : 'Save profile'}</Text>
         </Pressable>
-        {saveMessage ? <Text style={styles.saveMessage}>{saveMessage}</Text> : null}
+        {saveMessage ? (
+          <Text style={saveMessage === 'Unable to save' ? styles.saveError : styles.saveMessage}>
+            {saveMessage}
+          </Text>
+        ) : null}
       </ScrollView>
     </KeyboardAvoidingView>
   );

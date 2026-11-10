@@ -3,20 +3,20 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#F4F5F7',
+    backgroundColor: '#F1F4F8',
     paddingHorizontal: 24,
     paddingTop: 28,
   },
   title: {
     fontSize: 32,
     fontWeight: '600',
-    color: '#243038',
+    color: '#15283F',
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
     fontWeight: '400',
-    color: '#8B919A',
+    color: '#6D7C8E',
     marginBottom: 20,
   },
   card: {
@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
     borderRadius: 18,
     padding: 10,
     gap: 14,
-    shadowColor: '#243038',
+    shadowColor: '#15283F',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 8,
@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
     width: 152,
     height: 92,
     borderRadius: 12,
-    backgroundColor: '#DDE3E5',
+    backgroundColor: '#DEE5ED',
   },
   thumbnailPlaceholder: {
     width: 152,
@@ -44,14 +44,14 @@ export const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#DDE3E5',
+    backgroundColor: '#DEE5ED',
   },
   film: {
     width: 28,
     height: 22,
     borderRadius: 4,
     borderWidth: 1.5,
-    borderColor: '#5C6570',
+    borderColor: '#556678',
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 3,
@@ -61,7 +61,7 @@ export const styles = StyleSheet.create({
     width: 2,
     height: 12,
     borderRadius: 1,
-    backgroundColor: '#5C6570',
+    backgroundColor: '#556678',
   },
   cardText: {
     flex: 1,
@@ -69,27 +69,27 @@ export const styles = StyleSheet.create({
   filename: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#243038',
+    color: '#15283F',
     marginBottom: 2,
   },
   date: {
     fontSize: 14,
     fontWeight: '400',
-    color: '#8B919A',
+    color: '#6D7C8E',
     marginBottom: 5,
   },
   counts: {
     fontSize: 14,
     fontWeight: '400',
-    color: '#5C6570',
+    color: '#556678',
   },
   countsIcon: {
-    color: '#3E7A57',
+    color: '#3A6B9C',
     fontSize: 15,
   },
   chevron: {
     fontSize: 22,
     fontWeight: '400',
-    color: '#9AA1A9',
+    color: '#93A0AE',
   },
 });

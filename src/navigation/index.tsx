@@ -64,13 +64,13 @@ export function AppNavigator() {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: '#F4F5F7',
+    backgroundColor: '#F1F4F8',
   },
   bar: {
     flexDirection: 'row',
     backgroundColor: '#fff',
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: '#E6E8EC',
+    borderTopColor: '#D5DEE8',
   },
   tab: {
     flex: 1,
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: '#3E7A57',
+    backgroundColor: '#3A6B9C',
   },
   dotHidden: {
     width: 6,
@@ -94,11 +94,11 @@ const styles = StyleSheet.create({
   tabLabel: {
     fontSize: 14,
     fontWeight: '400',
-    color: '#8B919A',
+    color: '#6D7C8E',
   },
   tabSelected: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#3E7A57',
+    color: '#3A6B9C',
   },
 });

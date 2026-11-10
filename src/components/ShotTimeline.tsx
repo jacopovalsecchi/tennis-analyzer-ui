@@ -82,9 +82,9 @@ export function ShotTimeline({
         </View>
       </View>
       <View style={timelineStyles.legend}>
-        <LegendDot color="#B5F238" label="Forehand" />
-        <LegendDot color="#80928A" label="Backhand" />
-        <LegendDot color="#A8ADB2" label="Other" />
+        <LegendDot color="#3A6B9C" label="Forehand" />
+        <LegendDot color="#8A97A6" label="Backhand" />
+        <LegendDot color="#D3DAE2" label="Other" />
       </View>
     </View>
   );
@@ -101,9 +101,9 @@ function LegendDot({ color, label }: { color: string; label: string }) {
 
 const timelineStyles = StyleSheet.create({
   card: {
-    backgroundColor: '#F6F7F9',
+    backgroundColor: '#F6F8FB',
     borderWidth: 1,
-    borderColor: '#E6E8EC',
+    borderColor: '#D5DEE8',
     borderRadius: 18,
     paddingHorizontal: 16,
     paddingTop: 14,
@@ -117,7 +117,7 @@ const timelineStyles = StyleSheet.create({
     marginBottom: 18,
   },
   title: {
-    color: '#8B919A',
+    color: '#6D7C8E',
     fontSize: 12,
     fontWeight: '500',
     letterSpacing: 0.8,
@@ -133,7 +133,7 @@ const timelineStyles = StyleSheet.create({
     right: 2,
     top: 19,
     height: 3,
-    backgroundColor: '#9AA1A9',
+    backgroundColor: '#93A0AE',
   },
   startMark: {
     position: 'absolute',
@@ -142,7 +142,7 @@ const timelineStyles = StyleSheet.create({
     width: 4,
     height: 16,
     borderRadius: 2,
-    backgroundColor: '#243038',
+    backgroundColor: '#15283F',
   },
   endMark: {
     position: 'absolute',
@@ -151,7 +151,7 @@ const timelineStyles = StyleSheet.create({
     width: 4,
     height: 16,
     borderRadius: 2,
-    backgroundColor: '#243038',
+    backgroundColor: '#15283F',
   },
   marker: {
     position: 'absolute',
@@ -170,21 +170,21 @@ const timelineStyles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     fontSize: 9,
-    fontWeight: '700',
-    color: '#fff',
+    fontWeight: '600',
+    color: '#FFFFFF',
     overflow: 'hidden',
   },
   forehandMarker: {
-    backgroundColor: '#3E7A57',
+    backgroundColor: '#3A6B9C',
   },
   backhandMarker: {
-    backgroundColor: '#8B919A',
+    backgroundColor: '#8A97A6',
   },
   otherMarker: {
-    backgroundColor: '#D2D6DA',
+    backgroundColor: '#D3DAE2',
   },
   otherMarkerText: {
-    color: '#243038',
+    color: '#15283F',
   },
   timeLabels: {
     position: 'absolute',
@@ -195,7 +195,7 @@ const timelineStyles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   time: {
-    color: '#243038',
+    color: '#15283F',
     fontSize: 12,
   },
   legend: {
@@ -214,7 +214,7 @@ const timelineStyles = StyleSheet.create({
     borderRadius: 8,
   },
   legendText: {
-    color: '#5C6570',
+    color: '#556678',
     fontSize: 14,
   },
 });

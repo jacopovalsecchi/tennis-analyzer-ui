@@ -1,15 +1,26 @@
 import { Platform } from 'react-native';
+import { BACKEND_URL } from '../config';
 import type { Profile, ShotComment, VideoFile, VideoResult } from '../types';
 import { setLatestResult } from './latestResult';
 
-export { getLatestResult, setLatestResult, subscribeLatestResult } from './latestResult';
+export {
+  getLatestResult,
+  setLatestResult,
+  subscribeLatestResult,
+} from './latestResult';
 
-/** Android emulator reaches the host machine at 10.0.2.2. */
-//const host = Platform.OS === 'android' ? '10.0.2.2' : '192.168.129.254';
-const host = Platform.OS === 'android' ? '10.0.2.2' : '192.168.129.5';
-//const host = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
+/** Android emulator reaches the host machine at 10.0.2.2, not localhost. */
+function apiBaseUrl(): string {
+  const url = (BACKEND_URL || 'http://localhost:3001').replace(/\/$/, '');
+  if (Platform.OS === 'android') {
+    return url
+      .replace('://localhost', '://10.0.2.2')
+      .replace('://127.0.0.1', '://10.0.2.2');
+  }
+  return url;
+}
 
-export const API_BASE_URL = `http://${host}:3001`;
+export const API_BASE_URL = apiBaseUrl();
 
 /** API client for the Node backend. */
 export const apiClient = {
@@ -27,10 +38,12 @@ export async function updateProfile(profile: Profile): Promise<void> {
   });
 
   if (!response.ok) {
-    const payload = (await response.json().catch(() => null)) as
-      | { error?: string }
-      | null;
-    throw new Error(payload?.error ?? `Profile update failed (${response.status})`);
+    const payload = (await response.json().catch(() => null)) as {
+      error?: string;
+    } | null;
+    throw new Error(
+      payload?.error ?? `Profile update failed (${response.status})`,
+    );
   }
 }
 
@@ -89,9 +102,9 @@ export async function uploadVideo(file: VideoFile): Promise<VideoResult> {
   });
 
   if (!response.ok) {
-    const payload = (await response.json().catch(() => null)) as
-      | { error?: string }
-      | null;
+    const payload = (await response.json().catch(() => null)) as {
+      error?: string;
+    } | null;
     throw new Error(payload?.error ?? `Upload failed (${response.status})`);
   }
 

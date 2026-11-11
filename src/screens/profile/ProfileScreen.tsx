@@ -11,6 +11,8 @@ import {
   View,
 } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
+import { useAuth } from '../../auth/AuthProvider';
+import { messageFromUnknown } from '../../auth/errors';
 import { updateProfile } from '../../services';
 import type { Profile } from '../../types';
 import { styles } from './styles';
@@ -64,7 +66,8 @@ function Dropdown<T extends string>({
   onChange: (value: T) => void;
 }) {
   const [visible, setVisible] = useState(false);
-  const selectedLabel = options.find(option => option.value === value)?.label ?? value;
+  const selectedLabel =
+    options.find(option => option.value === value)?.label ?? value;
 
   return (
     <View style={styles.field}>
@@ -77,8 +80,12 @@ function Dropdown<T extends string>({
         visible={visible}
         transparent
         animationType="fade"
-        onRequestClose={() => setVisible(false)}>
-        <Pressable style={styles.modalBackdrop} onPress={() => setVisible(false)}>
+        onRequestClose={() => setVisible(false)}
+      >
+        <Pressable
+          style={styles.modalBackdrop}
+          onPress={() => setVisible(false)}
+        >
           <View style={styles.dropdownMenu}>
             {options.map(option => (
               <Pressable
@@ -87,7 +94,8 @@ function Dropdown<T extends string>({
                 onPress={() => {
                   onChange(option.value);
                   setVisible(false);
-                }}>
+                }}
+              >
                 <Text style={styles.dropdownOptionText}>{option.label}</Text>
               </Pressable>
             ))}
@@ -100,9 +108,12 @@ function Dropdown<T extends string>({
 
 /** Editable profile: name, handedness, backhand, height, weight and image. */
 export function ProfileScreen() {
+  const { email, signOut } = useAuth();
   const [profile, setProfile] = useState<Profile>(initialProfile);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState<string | null>(null);
+  const [loggingOut, setLoggingOut] = useState(false);
+  const [logoutError, setLogoutError] = useState<string | null>(null);
 
   const setField = <K extends keyof Profile>(field: K, value: Profile[K]) => {
     setProfile(current => ({ ...current, [field]: value }));
@@ -110,10 +121,25 @@ export function ProfileScreen() {
   };
 
   const chooseImage = async () => {
-    const result = await launchImageLibrary({ mediaType: 'photo', selectionLimit: 1 });
+    const result = await launchImageLibrary({
+      mediaType: 'photo',
+      selectionLimit: 1,
+    });
     const uri = result.assets?.[0]?.uri;
     if (uri) {
       setField('imageUri', uri);
+    }
+  };
+
+  const logOut = async () => {
+    setLoggingOut(true);
+    setLogoutError(null);
+    try {
+      await signOut();
+    } catch (caught) {
+      setLogoutError(messageFromUnknown(caught));
+    } finally {
+      setLoggingOut(false);
     }
   };
 
@@ -133,9 +159,16 @@ export function ProfileScreen() {
   return (
     <KeyboardAvoidingView
       style={styles.screen}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-        <Text style={styles.title}>Profile</Text>
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+      <ScrollView
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
+      >
+        <Text style={[styles.title, email ? styles.titleWithEmail : null]}>
+          Profile
+        </Text>
+        {email ? <Text style={styles.email}>{email}</Text> : null}
         <Pressable onPress={chooseImage} style={styles.avatarButton}>
           {profile.imageUri ? (
             <Image source={{ uri: profile.imageUri }} style={styles.avatar} />
@@ -187,12 +220,32 @@ export function ProfileScreen() {
           keyboardType="numeric"
         />
         <Pressable disabled={saving} onPress={save} style={styles.saveButton}>
-          <Text style={styles.saveButtonText}>{saving ? 'Saving…' : 'Save profile'}</Text>
+          <Text style={styles.saveButtonText}>
+            {saving ? 'Saving…' : 'Save profile'}
+          </Text>
         </Pressable>
         {saveMessage ? (
-          <Text style={saveMessage === 'Unable to save' ? styles.saveError : styles.saveMessage}>
+          <Text
+            style={
+              saveMessage === 'Unable to save'
+                ? styles.saveError
+                : styles.saveMessage
+            }
+          >
             {saveMessage}
           </Text>
+        ) : null}
+        <Pressable
+          disabled={loggingOut}
+          onPress={logOut}
+          style={styles.logoutButton}
+        >
+          <Text style={styles.logoutText}>
+            {loggingOut ? 'Logging out…' : 'Log out'}
+          </Text>
+        </Pressable>
+        {logoutError ? (
+          <Text style={styles.saveError}>{logoutError}</Text>
         ) : null}
       </ScrollView>
     </KeyboardAvoidingView>

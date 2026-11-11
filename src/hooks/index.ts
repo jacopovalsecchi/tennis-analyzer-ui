@@ -11,7 +11,10 @@ import type { VideoResult } from '../types';
 export function useLatestResult(): VideoResult {
   const [result, setResult] = useState(getLatestResult);
 
-  useEffect(() => subscribeLatestResult(() => setResult(getLatestResult())), []);
+  useEffect(
+    () => subscribeLatestResult(() => setResult(getLatestResult())),
+    [],
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -27,3 +30,5 @@ export function useLatestResult(): VideoResult {
 
   return result;
 }
+
+export { useAuth } from '../auth/AuthProvider';

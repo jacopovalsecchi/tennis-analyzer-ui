@@ -1,6 +1,14 @@
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
 import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { useAuth } from '../auth/AuthProvider';
+import {
+  AuthScreen,
   ProfileScreen,
   ResultsScreen,
   VideoDetailScreen,
@@ -16,8 +24,27 @@ const tabs = [
 
 type TabKey = (typeof tabs)[number]['key'];
 
-/** Stack and tab navigator setup. */
+/** Signed-out users see sign in. A session opens the app on Profile. */
 export function AppNavigator() {
+  const { status, configured } = useAuth();
+
+  if (!configured) {
+    return <AuthScreen />;
+  }
+  if (status === 'loading') {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator color="#3A6B9C" />
+      </View>
+    );
+  }
+  if (status === 'signedOut') {
+    return <AuthScreen />;
+  }
+  return <MainTabs />;
+}
+
+function MainTabs() {
   const [tab, setTab] = useState<TabKey>('profile');
   const [openResult, setOpenResult] = useState<VideoResult | null>(null);
   const showDetail = tab === 'results' && openResult !== null;
@@ -46,7 +73,8 @@ export function AppNavigator() {
                     setOpenResult(null);
                     setTab(item.key);
                   }}
-                  style={styles.tab}>
+                  style={styles.tab}
+                >
                   <View style={selected ? styles.dot : styles.dotHidden} />
                   <Text style={selected ? styles.tabSelected : styles.tabLabel}>
                     {item.label}
@@ -62,6 +90,12 @@ export function AppNavigator() {
 }
 
 const styles = StyleSheet.create({
+  loading: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F1F4F8',
+  },
   root: {
     flex: 1,
     backgroundColor: '#F1F4F8',

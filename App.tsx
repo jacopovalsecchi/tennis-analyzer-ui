@@ -3,6 +3,7 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
+import { AuthProvider } from './src/auth/AuthProvider';
 import { AppNavigator } from './src/navigation';
 
 function App() {
@@ -10,8 +11,10 @@ function App() {
 
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
+      <AuthProvider>
+        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <AppContent />
+      </AuthProvider>
     </SafeAreaProvider>
   );
 }
@@ -24,7 +27,8 @@ function AppContent() {
       style={[
         styles.container,
         { paddingTop: insets.top, paddingBottom: insets.bottom },
-      ]}>
+      ]}
+    >
       <AppNavigator />
     </View>
   );

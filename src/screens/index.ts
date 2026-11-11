@@ -1,3 +1,4 @@
+export { AuthScreen } from './auth/AuthScreen';
 export { ProfileScreen } from './profile/ProfileScreen';
 export { ResultsScreen } from './results/ResultsScreen';
 export { VideoDetailScreen } from './video-detail/VideoDetailScreen';

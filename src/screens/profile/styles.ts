@@ -16,6 +16,15 @@ export const styles = StyleSheet.create({
     color: '#15283F',
     marginBottom: 20,
   },
+  titleWithEmail: {
+    marginBottom: 8,
+  },
+  email: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '#6D7C8E',
+    marginBottom: 20,
+  },
   field: {
     paddingVertical: 12,
     borderBottomWidth: 1,
@@ -117,5 +126,15 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#9C3D32',
     fontSize: 15,
+  },
+  logoutButton: {
+    alignItems: 'center',
+    marginTop: 8,
+    paddingVertical: 14,
+  },
+  logoutText: {
+    color: '#3A6B9C',
+    fontSize: 14,
+    fontWeight: '600',
   },
 });

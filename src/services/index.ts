@@ -1,7 +1,8 @@
-import { Platform } from 'react-native';
-import { BACKEND_URL } from '../config';
-import type { Profile, ShotComment, VideoFile, VideoResult } from '../types';
+import type { ShotComment, VideoFile, VideoResult } from '../types';
+import { API_BASE_URL } from './apiBase';
 import { setLatestResult } from './latestResult';
+
+export { API_BASE_URL } from './apiBase';
 
 export {
   getLatestResult,
@@ -9,43 +10,17 @@ export {
   subscribeLatestResult,
 } from './latestResult';
 
-/** Android emulator reaches the host machine at 10.0.2.2, not localhost. */
-function apiBaseUrl(): string {
-  const url = (BACKEND_URL || 'http://localhost:3001').replace(/\/$/, '');
-  if (Platform.OS === 'android') {
-    return url
-      .replace('://localhost', '://10.0.2.2')
-      .replace('://127.0.0.1', '://10.0.2.2');
-  }
-  return url;
-}
-
-export const API_BASE_URL = apiBaseUrl();
+export {
+  emptyProfileForm,
+  fetchOwnProfile,
+  profileValidationMessage,
+  updateProfile,
+} from './profile';
 
 /** API client for the Node backend. */
 export const apiClient = {
   baseUrl: API_BASE_URL,
 };
-
-/** Save the profile currently edited in the app. */
-export async function updateProfile(profile: Profile): Promise<void> {
-  const response = await fetch(`${API_BASE_URL}/profile`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(profile),
-  });
-
-  if (!response.ok) {
-    const payload = (await response.json().catch(() => null)) as {
-      error?: string;
-    } | null;
-    throw new Error(
-      payload?.error ?? `Profile update failed (${response.status})`,
-    );
-  }
-}
 
 type AnalysisPayload = {
   filename?: string;

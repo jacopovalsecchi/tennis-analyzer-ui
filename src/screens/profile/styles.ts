@@ -25,6 +25,12 @@ export const styles = StyleSheet.create({
     color: '#6D7C8E',
     marginBottom: 20,
   },
+  loading: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '#6D7C8E',
+    marginBottom: 16,
+  },
   field: {
     paddingVertical: 12,
     borderBottomWidth: 1,
@@ -43,15 +49,6 @@ export const styles = StyleSheet.create({
     fontWeight: '400',
     padding: 0,
     color: '#15283F',
-  },
-  dropdown: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  chevron: {
-    fontSize: 22,
-    color: '#93A0AE',
   },
   avatarButton: {
     alignItems: 'center',
@@ -81,34 +78,15 @@ export const styles = StyleSheet.create({
     fontWeight: '600',
     marginTop: 8,
   },
-  modalBackdrop: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 32,
-    backgroundColor: 'rgba(0, 0, 0, 0.35)',
-  },
-  dropdownMenu: {
-    overflow: 'hidden',
-    borderRadius: 18,
-    backgroundColor: '#FFFFFF',
-  },
-  dropdownOption: {
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#D5DEE8',
-  },
-  dropdownOptionText: {
-    fontSize: 16,
-    fontWeight: '400',
-    color: '#15283F',
-  },
   saveButton: {
     alignItems: 'center',
     marginTop: 24,
     paddingVertical: 14,
     borderRadius: 16,
     backgroundColor: '#3A6B9C',
+  },
+  saveButtonDisabled: {
+    opacity: 0.55,
   },
   saveButtonText: {
     color: '#FFFFFF',

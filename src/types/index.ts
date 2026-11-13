@@ -1,18 +1,19 @@
-export type Handedness = "left" | "right";
+export type Handedness = 'left' | 'right';
 
-export type BackhandStyle = "one end" | "two end";
+export type BackhandStyle = 'one-handed' | 'two-handed';
 
+/** Profile form. Height and weight stay as typed until a successful save. */
 export interface Profile {
   firstName: string;
   lastName: string;
-  handedness: Handedness;
-  backhand: BackhandStyle;
+  handedness: Handedness | '';
+  backhandStyle: BackhandStyle | '';
   /** Local URI of the profile image selected from the device library. */
   imageUri?: string;
-  /** Centimetres. */
-  height: number;
-  /** Kilograms. */
-  weight: number;
+  /** Centimetres, as typed. */
+  height: string;
+  /** Kilograms, as typed. */
+  weight: string;
 }
 
 /** One detected stroke and how it was judged. */
